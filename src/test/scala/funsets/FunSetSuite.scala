@@ -101,7 +101,7 @@ class FunSetSuite extends FunSuite {
     }
   }
 
-  ignore("union contains all elements") {
+  test("union contains all elements") {
     new TestSets {
       val s = union(s1, s2)
       assert(contains(s, 1), "Union 1")
@@ -109,4 +109,43 @@ class FunSetSuite extends FunSuite {
       assert(!contains(s, 3), "Union 3")
     }
   }
+
+  test("diff contains all elements in this set but not in that set") {
+    new TestSets {
+      val diff_123 = diff(union(union(s1, s2), s3), s1)
+      printSet(diff_123)
+      assert(contains(diff_123, 2), "diff_123 contains 2")
+      assert(contains(diff_123, 3), "diff_123 contains 2")
+      assert(!contains(diff_123, 1), "diff_123 not contains 1")
+    }
+  }
+
+  test("filter works") {
+    new TestSets {
+      val s123 = union(union(s1, s2), s3)
+      val filtered = filter(s123, x => x % 2 == 0)
+      printSet(filtered)
+      assert(contains(filtered, 2))
+      assert(!contains(filtered, 1))
+      assert(!contains(filtered, 3))
+    }
+  }
+
+  test("forall integer from -1000 to 1000") {
+    assert(forall(x => -1000 <= x && x <= 1000, x => x < 2000), "all elements of Set -1000 to 1000 less than 2000")
+  }
+
+  test("exists works") {
+    assert(exists(x => -1000 <= x && x <= 1000, x => x == 0), "exist element in Set -1000 to 1000 taht equas 0")
+  }
+
+  test("map works") {
+    new TestSets {
+      val s123 = union(union(s1, s2), s3)
+      val s369 = map(s123, x => x * 3)
+//      printSet(s123)
+//      printSet(s369)
+    }
+  }
+
 }
