@@ -136,7 +136,11 @@ import org.scalatest.junit.JUnitRunner
   }
 
   test("exists works") {
-    assert(exists(x => -1000 <= x && x <= 1000, x => x == 0), "exist element in Set -1000 to 1000 taht equas 0")
+    assert(exists(x => -1000 <= x && x <= 1000, x => x == 0), "exist element in Set -1000 to 1000 that equas 0")
+    new TestSets {
+      assert(exists(s1, x => x == 1))
+      assert(!exists(s1, x => x == 2))
+    }
   }
 
   test("map works") {
